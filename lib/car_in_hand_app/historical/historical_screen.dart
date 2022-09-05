@@ -1,3 +1,4 @@
+import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
 import 'package:carronamao/car_in_hand_app/mocks/stick_nodes_mocks.dart';
 import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
@@ -56,13 +57,16 @@ class _HistoricalScreenState extends State<HistoricalScreen>
   }
 
   void addAllListData() {
-    for (var element in StickNodesMocks.getStickNodesListMock()) {
-      listViews.add(
-        HistoricView(
-            title: element.kindOfService.description,
-            description: element.getDescriptionStickNote()),
-      );
-    }
+    CarInHandApi.getStickNotes().then((res) => {
+          for (var element in res)
+            {
+              listViews.add(
+                HistoricView(
+                    title: element.kindOfService.description,
+                    description: element.getDescriptionStickNote()),
+              )
+            }
+        });
   }
 
   Future<bool> getData() async {

@@ -16,3 +16,15 @@ String getDescriptionStickNodeStatus(StickNodeStatusEnum stickNodeStatus) {
       return 'Cancelado';
   }
 }
+
+StickNodeStatusEnum getStickNodeStatusPorString(String stickNodeStatus) {
+  switch (stickNodeStatus) {
+    case "CONCLUIDO":
+      return StickNodeStatusEnum.CONCLUIDO;
+    case "PENDENTE":
+      return StickNodeStatusEnum.PENDENTE;
+    case "CANCELADO":
+      return StickNodeStatusEnum.CANCELADO;
+  }
+  return StickNodeStatusEnum.CANCELADO;
+}

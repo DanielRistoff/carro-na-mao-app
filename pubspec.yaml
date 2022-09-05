@@ -40,6 +40,8 @@ dependencies:
   flutter_svg: ^1.1.0
   date_util: ^0.1.4
   flutter_alarm_clock: ^0.0.2
+  http: ^0.13.5
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:

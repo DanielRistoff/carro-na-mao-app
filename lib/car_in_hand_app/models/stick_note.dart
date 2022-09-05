@@ -8,7 +8,7 @@ class StickNote {
   final String date;
   final String hour;
   final KindOfService kindOfService;
-  final String note;
+  final String? note;
   final StickNodeStatusEnum status;
   final DateTime created;
   final DateTime? update;
@@ -18,7 +18,7 @@ class StickNote {
     required this.date,
     required this.hour,
     required this.kindOfService,
-    required this.note,
+    this.note,
     required this.status,
     required this.created,
     this.update,
