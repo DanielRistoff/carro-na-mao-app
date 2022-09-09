@@ -29,6 +29,6 @@ class StickNote {
   }
 
   String getDescriptionStickNote() {
-    return "${getDateHourFormatted()} - ${getDescriptionStickNodeStatus(status)} ${note != '' ? (" - $note") : ""} ";
+    return "${getDateHourFormatted()} - ${getDescriptionStickNodeStatus(status)} ${(note != '' && note != null) ? (" - $note") : ""} ";
   }
 }

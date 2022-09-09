@@ -1,6 +1,7 @@
 import 'package:carronamao/car_in_hand_app/historical/historical_screen.dart';
 import 'package:carronamao/car_in_hand_app/menu/menu_screen.dart';
 import 'package:carronamao/car_in_hand_app/mocks/stick_nodes_mocks.dart';
+import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:carronamao/car_in_hand_app/models/tabIcon_data.dart';
 import 'package:carronamao/car_in_hand_app/recall/recall_screen.dart';
@@ -32,7 +33,7 @@ class _CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
     tabIconsList.forEach((TabIconData tab) {
       tab.isSelected = false;
     });
-    tabIconsList[2].isSelected = true;
+    tabIconsList[0].isSelected = true;
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 10), vsync: this);
@@ -40,7 +41,8 @@ class _CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
 
     //buscar a lista de servicos
     // _services = StickNodesMocks.getStickNodesListMock();
-    CarInHandApi.getStickNotes().then((res) => _services = res);
+    CarInHandApi.getStickNotesByStatus(StickNodeStatusEnum.PENDENTE)
+        .then((res) => _services = res);
     super.initState();
   }
 
