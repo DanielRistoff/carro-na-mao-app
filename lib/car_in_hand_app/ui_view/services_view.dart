@@ -1,4 +1,7 @@
+import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
+import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
+import 'package:carronamao/car_in_hand_app/sticky_notes/add_sticky_notes_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../car_in_hand_app_theme.dart';
@@ -94,7 +97,12 @@ class ServicesView extends StatelessWidget {
                             color: const Color.fromARGB(255, 22, 156, 51),
                             icon: const Icon(Icons.edit),
                             tooltip: 'Alterar',
-                            onPressed: () {},
+                            onPressed: () {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Serviço alterado com sucesso!"),
+                              ));
+                            },
                           ),
                         ),
                         Padding(
@@ -105,7 +113,15 @@ class ServicesView extends StatelessWidget {
                             color: const Color.fromARGB(255, 187, 14, 57),
                             icon: const Icon(Icons.delete),
                             tooltip: 'Deletar',
-                            onPressed: () {},
+                            onPressed: () {
+                              stickNode.status = StickNodeStatusEnum.CANCELADO;
+                              CarInHandApi.updateStickNote(stickNode);
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Serviço removido com sucesso!"),
+                              ));
+                            },
                           ),
                         )
                       ])

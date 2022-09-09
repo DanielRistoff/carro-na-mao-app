@@ -5,13 +5,13 @@ import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
 
 class StickNote {
   int? id;
-  final String date;
-  final String hour;
-  final KindOfService kindOfService;
-  final String? note;
-  final StickNodeStatusEnum status;
-  final DateTime created;
-  final DateTime? update;
+  String date;
+  String hour;
+  KindOfService kindOfService;
+  String? note;
+  StickNodeStatusEnum status;
+  DateTime created;
+  DateTime? update;
 
   StickNote({
     this.id,
