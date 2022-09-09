@@ -1,3 +1,4 @@
+import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
 import 'package:carronamao/car_in_hand_app/mocks/kind_of_service_mocks.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
@@ -311,7 +312,7 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
                                       onPressed: () {
                                         if (_dateSelected != '' &&
                                             _hourSelected != '') {
-                                          widget.services.add(StickNote(
+                                          StickNote sn = StickNote(
                                               id: 1,
                                               date: _dateSelected,
                                               hour: _hourSelected,
@@ -320,7 +321,9 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
                                               note: _noteController.text,
                                               status:
                                                   StickNodeStatusEnum.PENDENTE,
-                                              created: DateTime.now()));
+                                              created: DateTime.now());
+                                          CarInHandApi.createStickNote(sn);
+                                          widget.services.add(sn);
 
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(

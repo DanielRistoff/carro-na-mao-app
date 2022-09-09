@@ -5,8 +5,32 @@ import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class CarInHandApi {
+  static void createStickNote(StickNote stickNote) async {
+    var uri = Uri(
+      scheme: 'http',
+      host: '10.0.2.2',
+      port: 4200,
+      path: '/v1/public/stick-note/',
+    );
+
+    http.Response response = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "date": stickNote.date,
+        "hour": stickNote.hour,
+        "kindOfService": stickNote.kindOfService.id,
+        "status": stickNote.status.name,
+        "created": DateFormat('dd/MM/yyyy, HH:mm').format(stickNote.created)
+      }),
+    );
+  }
+
   static Future<List<StickNote>> getStickNotes() async {
     var uri = Uri(
       scheme: 'http',
