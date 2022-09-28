@@ -6,6 +6,7 @@ import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:mobx/mobx.dart';
 
 class CarInHandApi {
   static void createStickNote(StickNote stickNote) async {
@@ -68,7 +69,7 @@ class CarInHandApi {
     return prepareListStickNote(dadosJson);
   }
 
-  static Future<List<StickNote>> getStickNotesByStatus(
+  static Future<ObservableList<StickNote>> getStickNotesByStatus(
       StickNodeStatusEnum status) async {
     var uri = Uri(
       scheme: 'http',
@@ -84,8 +85,8 @@ class CarInHandApi {
     return prepareListStickNote(dadosJson);
   }
 
-  static List<StickNote> prepareListStickNote(dadosJson) {
-    List<StickNote> stickNotes = [];
+  static ObservableList<StickNote> prepareListStickNote(dadosJson) {
+    ObservableList<StickNote> stickNotes = ObservableList<StickNote>();
     for (var sticknNoteD in dadosJson) {
       StickNote stickNote = StickNote(
           id: sticknNoteD["id"],

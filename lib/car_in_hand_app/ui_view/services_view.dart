@@ -4,6 +4,7 @@ import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:carronamao/car_in_hand_app/sticky_notes/add_sticky_notes_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import '../car_in_hand_app_theme.dart';
 
 class ServicesView extends StatelessWidget {
@@ -73,8 +74,7 @@ class ServicesView extends StatelessWidget {
                               right: 16,
                             ),
                             child: Text(
-                              stickNode
-                                  .getDescriptionStickNote(), // tem que mudar
+                              stickNode.getDescriptionStickNote(),
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontFamily: CarInHandAppTheme.fontName,
@@ -91,10 +91,29 @@ class ServicesView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(
                             top: 6,
-                            left: 250,
+                            left: 215,
                           ),
                           child: IconButton(
                             color: const Color.fromARGB(255, 22, 156, 51),
+                            icon: const Icon(Icons.check),
+                            tooltip: 'Concluir',
+                            onPressed: () {
+                              stickNode.status = StickNodeStatusEnum.CONCLUIDO;
+                              CarInHandApi.updateStickNote(stickNode);
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Serviço concluído com sucesso!"),
+                              ));
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 6,
+                          ),
+                          child: IconButton(
+                            color: Color.fromARGB(255, 200, 206, 29),
                             icon: const Icon(Icons.edit),
                             tooltip: 'Alterar',
                             onPressed: () {
@@ -111,7 +130,7 @@ class ServicesView extends StatelessWidget {
                           ),
                           child: IconButton(
                             color: const Color.fromARGB(255, 187, 14, 57),
-                            icon: const Icon(Icons.delete),
+                            icon: const Icon(Icons.close),
                             tooltip: 'Deletar',
                             onPressed: () {
                               stickNode.status = StickNodeStatusEnum.CANCELADO;

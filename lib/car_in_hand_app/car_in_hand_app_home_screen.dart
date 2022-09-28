@@ -8,6 +8,7 @@ import 'package:carronamao/car_in_hand_app/recall/recall_screen.dart';
 import 'package:carronamao/car_in_hand_app/sticky_notes/sticky_notes_screen.dart';
 import 'package:carronamao/car_in_hand_app/sticky_notes/add_sticky_notes_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'api/car_in_hand_api.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'car_in_hand_app_theme.dart';
@@ -20,7 +21,9 @@ class CarInHandAppHomeScreen extends StatefulWidget {
 class _CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
     with TickerProviderStateMixin {
   AnimationController? animationController;
-  List<StickNote> _services = [];
+
+  @observable
+  ObservableList<StickNote> _services = ObservableList<StickNote>();
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
