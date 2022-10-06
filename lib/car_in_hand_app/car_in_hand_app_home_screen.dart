@@ -15,15 +15,14 @@ import 'car_in_hand_app_theme.dart';
 
 class CarInHandAppHomeScreen extends StatefulWidget {
   @override
-  _CarInHandAppHomeScreenState createState() => _CarInHandAppHomeScreenState();
+  CarInHandAppHomeScreenState createState() => CarInHandAppHomeScreenState();
 }
 
-class _CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
+class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
     with TickerProviderStateMixin {
   AnimationController? animationController;
 
-  @observable
-  ObservableList<StickNote> _services = ObservableList<StickNote>();
+  List<StickNote> services = <StickNote>[];
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
@@ -43,10 +42,15 @@ class _CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
     tabBody = HistoricalScreen(animationController: animationController);
 
     //buscar a lista de servicos
-    // _services = StickNodesMocks.getStickNodesListMock();
     CarInHandApi.getStickNotesByStatus(StickNodeStatusEnum.PENDENTE)
-        .then((res) => _services = res);
+        .then((res) => services = res);
     super.initState();
+  }
+
+  void getServices(StickNote sn) {
+    setState(() {
+      services.remove(sn);
+    });
   }
 
   @override
@@ -96,9 +100,10 @@ class _CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
           addClick: () {
             // click do botao
             setState(() {
+              print('atualizou o click do botao');
               tabBody = AddStickyNotesScreen(
                 animationController: animationController,
-                services: _services,
+                services: services,
               );
             });
           },
@@ -131,7 +136,7 @@ class _CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
                 setState(() {
                   tabBody = StickyNotesScreen(
                     animationController: animationController,
-                    services: _services,
+                    services: services,
                   );
                 });
               });

@@ -1,4 +1,5 @@
 import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
+import 'package:carronamao/car_in_hand_app/car_in_hand_app_home_screen.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:carronamao/car_in_hand_app/sticky_notes/add_sticky_notes_screen.dart';
@@ -100,7 +101,14 @@ class ServicesView extends StatelessWidget {
                             onPressed: () {
                               stickNode.status = StickNodeStatusEnum.CONCLUIDO;
                               CarInHandApi.updateStickNote(stickNode);
-
+                              context
+                                  .findAncestorStateOfType<
+                                      CarInHandAppHomeScreenState>()
+                                  ?.getServices(stickNode);
+                              context
+                                  .findAncestorStateOfType<
+                                      CarInHandAppHomeScreenState>()
+                                  ?.reassemble();
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 content: Text("Serviço concluído com sucesso!"),
@@ -135,7 +143,14 @@ class ServicesView extends StatelessWidget {
                             onPressed: () {
                               stickNode.status = StickNodeStatusEnum.CANCELADO;
                               CarInHandApi.updateStickNote(stickNode);
-
+                              context
+                                  .findAncestorStateOfType<
+                                      CarInHandAppHomeScreenState>()
+                                  ?.getServices(stickNode);
+                              context
+                                  .findAncestorStateOfType<
+                                      CarInHandAppHomeScreenState>()
+                                  ?.reassemble();
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 content: Text("Serviço removido com sucesso!"),

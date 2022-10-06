@@ -1,3 +1,5 @@
+import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
+import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:carronamao/car_in_hand_app/ui_view/historic_view.dart';
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_theme.dart';
@@ -60,6 +62,14 @@ class _StickyNotesScreenState extends State<StickyNotesScreen>
     for (var service in widget.services) {
       listViews.add(ServicesView(stickNode: service));
     }
+  }
+
+  void updatelistNotes() {
+    CarInHandApi.getStickNotesByStatus(StickNodeStatusEnum.PENDENTE)
+        .then((res) => {
+              for (var service in res)
+                {listViews.add(ServicesView(stickNode: service))}
+            });
   }
 
   Future<bool> getData() async {

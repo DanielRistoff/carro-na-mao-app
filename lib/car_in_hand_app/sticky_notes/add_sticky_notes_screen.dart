@@ -57,9 +57,12 @@ class _AddStickyNotesScreenState extends State<AddStickyNotesScreen>
   }
 
   void addAllListData() {
-    listViews.add(
-      AddStickyNotesView(services: widget.services),
-    );
+    setState(() {
+      print('passou depois do click');
+      listViews.add(
+        AddStickyNotesView(services: widget.services),
+      );
+    });
   }
 
   Future<bool> getData() async {
