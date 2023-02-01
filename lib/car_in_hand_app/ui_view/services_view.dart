@@ -10,7 +10,15 @@ import '../car_in_hand_app_theme.dart';
 
 class ServicesView extends StatelessWidget {
   final StickNote stickNode;
-  const ServicesView({required this.stickNode, Key? key}) : super(key: key);
+  final VoidCallback onFinalize;
+  final VoidCallback onDelete;
+
+  const ServicesView(
+      {required this.stickNode,
+      required this.onFinalize,
+      required this.onDelete,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -98,22 +106,7 @@ class ServicesView extends StatelessWidget {
                             color: const Color.fromARGB(255, 22, 156, 51),
                             icon: const Icon(Icons.check),
                             tooltip: 'Concluir',
-                            onPressed: () {
-                              stickNode.status = StickNodeStatusEnum.CONCLUIDO;
-                              CarInHandApi.updateStickNote(stickNode);
-                              context
-                                  .findAncestorStateOfType<
-                                      CarInHandAppHomeScreenState>()
-                                  ?.getServices(stickNode);
-                              context
-                                  .findAncestorStateOfType<
-                                      CarInHandAppHomeScreenState>()
-                                  ?.reassemble();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Serviço concluído com sucesso!"),
-                              ));
-                            },
+                            onPressed: onFinalize,
                           ),
                         ),
                         Padding(
@@ -140,22 +133,7 @@ class ServicesView extends StatelessWidget {
                             color: const Color.fromARGB(255, 187, 14, 57),
                             icon: const Icon(Icons.close),
                             tooltip: 'Deletar',
-                            onPressed: () {
-                              stickNode.status = StickNodeStatusEnum.CANCELADO;
-                              CarInHandApi.updateStickNote(stickNode);
-                              context
-                                  .findAncestorStateOfType<
-                                      CarInHandAppHomeScreenState>()
-                                  ?.getServices(stickNode);
-                              context
-                                  .findAncestorStateOfType<
-                                      CarInHandAppHomeScreenState>()
-                                  ?.reassemble();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Serviço removido com sucesso!"),
-                              ));
-                            },
+                            onPressed: onDelete,
                           ),
                         )
                       ])

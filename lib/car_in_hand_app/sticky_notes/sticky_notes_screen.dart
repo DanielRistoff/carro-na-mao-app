@@ -1,3 +1,5 @@
+// ignore_for_file: list_remove_unrelated_type
+
 import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
@@ -60,17 +62,43 @@ class _StickyNotesScreenState extends State<StickyNotesScreen>
 
   void addAllListData() {
     for (var service in widget.services) {
-      listViews.add(ServicesView(stickNode: service));
+      listViews.add(ServicesView(
+          stickNode: service,
+          onFinalize: () {
+            var indexFinalize = getIndexListViews(service);
+            setState(() {
+              listViews.removeAt(indexFinalize);
+            });
+            service.status = StickNodeStatusEnum.CONCLUIDO;
+            CarInHandApi.updateStickNote(service);
+          },
+          onDelete: () {
+            var indexDelete = getIndexListViews(service);
+            setState(() {
+              listViews.removeAt(indexDelete);
+            });
+            service.status = StickNodeStatusEnum.CANCELADO;
+            CarInHandApi.updateStickNote(service);
+          }));
     }
   }
 
-  void updatelistNotes() {
-    CarInHandApi.getStickNotesByStatus(StickNodeStatusEnum.PENDENTE)
-        .then((res) => {
-              for (var service in res)
-                {listViews.add(ServicesView(stickNode: service))}
-            });
+  int getIndexListViews(StickNote service) {
+    var serviceFinalizeWidget = listViews
+        .where(
+            (item) => item is ServicesView && item.stickNode.id == service.id)
+        .toList()
+        .firstWhere((widget) => true, orElse: () => Container());
+    return listViews.indexOf(serviceFinalizeWidget);
   }
+
+  // void updatelistNotes() {
+  //   CarInHandApi.getStickNotesByStatus(StickNodeStatusEnum.PENDENTE)
+  //       .then((res) => {
+  //             for (var service in res)
+  //               {listViews.add(ServicesView(stickNode: service))}
+  //           });
+  // }
 
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
@@ -111,8 +139,8 @@ class _StickyNotesScreenState extends State<StickyNotesScreen>
                   24,
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
-            itemCount: listViews.length,
             scrollDirection: Axis.vertical,
+            itemCount: listViews.length,
             itemBuilder: (BuildContext context, int index) {
               widget.animationController?.forward();
               return listViews[index];

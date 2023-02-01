@@ -27,7 +27,7 @@ class CarInHandApi {
         "hour": stickNote.hour,
         "kindOfService": stickNote.kindOfService.id,
         "status": stickNote.status.name,
-        "created": DateFormat('dd/MM/yyyy, HH:mm').format(stickNote.created)
+        "created": DateFormat('yyyy-MM-dd HH:mm:ss').format(stickNote.created)
       }),
     );
   }
@@ -50,7 +50,7 @@ class CarInHandApi {
         "hour": stickNote.hour,
         "kindOfService": stickNote.kindOfService.id,
         "status": stickNote.status.name,
-        "created": DateFormat('dd/MM/yyyy, HH:mm').format(stickNote.created)
+        "update": DateFormat('yyyy-MM-dd HH:mm:ss').format(stickNote.created)
       }),
     );
   }
