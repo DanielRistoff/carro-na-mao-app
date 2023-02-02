@@ -38,6 +38,26 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
     KindOfService _kindOfServiceSelected = KindOfServiceMocks()
         .getKindOfServicePerDescription(description: "Outros");
 
+    void salveStick() {
+      if (_dateSelected != '' && _hourSelected != '') {
+        StickNote sn = StickNote(
+            id: 1,
+            date: _dateSelected,
+            hour: _hourSelected,
+            kindOfService: _kindOfServiceSelected,
+            note: _noteController.text,
+            status: StickNodeStatusEnum.PENDENTE,
+            created: DateTime.now());
+        CarInHandApi.createStickNote(sn);
+        widget.services.add(sn);
+      }
+    }
+
+    void salveStickAndReturn() {
+      salveStick();
+      widget.onSalve();
+    }
+
     return Column(
       children: <Widget>[
         Padding(
@@ -311,31 +331,7 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
                                     child: CupertinoButton(
                                       disabledColor:
                                           CupertinoColors.inactiveGray,
-                                      onPressed: widget.onSalve,
-                                      // () {
-                                      //   if (_dateSelected != '' &&
-                                      //       _hourSelected != '') {
-                                      //     StickNote sn = StickNote(
-                                      //         id: 1,
-                                      //         date: _dateSelected,
-                                      //         hour: _hourSelected,
-                                      //         kindOfService:
-                                      //             _kindOfServiceSelected,
-                                      //         note: _noteController.text,
-                                      //         status:
-                                      //             StickNodeStatusEnum.PENDENTE,
-                                      //         created: DateTime.now());
-                                      //     CarInHandApi.createStickNote(sn);
-                                      //     widget.services.add(sn);
-
-                                      //     // ScaffoldMessenger.of(context)
-                                      //     //     .showSnackBar(const SnackBar(
-                                      //     //   content: Text(
-                                      //     //       "Serviço adicionado com sucesso!"),
-                                      //     // ));
-                                      //      widget.onSalve;
-                                      //   }
-                                      // },
+                                      onPressed: salveStickAndReturn,
                                       color: const Color.fromARGB(
                                           255, 91, 88, 251),
                                       child: const Text('Salvar'),

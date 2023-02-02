@@ -107,12 +107,23 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
                   animationController: animationController,
                   services: services,
                   onSalve: () {
-                    setState(() {
-                      getFilterServicesPending();
-                      tabBody = StickyNotesScreen(
-                        animationController: animationController,
-                        services: services,
-                      );
+                    animationController?.reverse().then<dynamic>((data) {
+                      if (!mounted) {
+                        return;
+                      }
+                      setState(() {
+                        getFilterServicesPending();
+                        tabIconsList.forEach((TabIconData tab) {
+                          if (tab.isSelected) {
+                            tab.isSelected = false;
+                          }
+                        });
+                        tabIconsList[2].isSelected = true;
+                        tabBody = StickyNotesScreen(
+                          animationController: animationController,
+                          services: services,
+                        );
+                      });
                     });
                   });
             });
