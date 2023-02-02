@@ -15,6 +15,7 @@ class StickyNotesScreen extends StatefulWidget {
 
   final AnimationController? animationController;
   final List<StickNote> services;
+
   @override
   _StickyNotesScreenState createState() => _StickyNotesScreenState();
 }

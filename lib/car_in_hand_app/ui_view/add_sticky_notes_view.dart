@@ -10,8 +10,10 @@ import '../car_in_hand_app_theme.dart';
 
 class AddStickyNotesView extends StatefulWidget {
   List<StickNote> services;
+  final VoidCallback onSalve;
 
-  AddStickyNotesView({required this.services, Key? key}) : super(key: key);
+  AddStickyNotesView({required this.services, required this.onSalve, Key? key})
+      : super(key: key);
 
   @override
   State<AddStickyNotesView> createState() => _AddStickyNotesViewState();
@@ -309,29 +311,31 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
                                     child: CupertinoButton(
                                       disabledColor:
                                           CupertinoColors.inactiveGray,
-                                      onPressed: () {
-                                        if (_dateSelected != '' &&
-                                            _hourSelected != '') {
-                                          StickNote sn = StickNote(
-                                              id: 1,
-                                              date: _dateSelected,
-                                              hour: _hourSelected,
-                                              kindOfService:
-                                                  _kindOfServiceSelected,
-                                              note: _noteController.text,
-                                              status:
-                                                  StickNodeStatusEnum.PENDENTE,
-                                              created: DateTime.now());
-                                          CarInHandApi.createStickNote(sn);
-                                          widget.services.add(sn);
+                                      onPressed: widget.onSalve,
+                                      // () {
+                                      //   if (_dateSelected != '' &&
+                                      //       _hourSelected != '') {
+                                      //     StickNote sn = StickNote(
+                                      //         id: 1,
+                                      //         date: _dateSelected,
+                                      //         hour: _hourSelected,
+                                      //         kindOfService:
+                                      //             _kindOfServiceSelected,
+                                      //         note: _noteController.text,
+                                      //         status:
+                                      //             StickNodeStatusEnum.PENDENTE,
+                                      //         created: DateTime.now());
+                                      //     CarInHandApi.createStickNote(sn);
+                                      //     widget.services.add(sn);
 
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                            content: Text(
-                                                "Serviço adicionado com sucesso!"),
-                                          ));
-                                        }
-                                      },
+                                      //     // ScaffoldMessenger.of(context)
+                                      //     //     .showSnackBar(const SnackBar(
+                                      //     //   content: Text(
+                                      //     //       "Serviço adicionado com sucesso!"),
+                                      //     // ));
+                                      //      widget.onSalve;
+                                      //   }
+                                      // },
                                       color: const Color.fromARGB(
                                           255, 91, 88, 251),
                                       child: const Text('Salvar'),

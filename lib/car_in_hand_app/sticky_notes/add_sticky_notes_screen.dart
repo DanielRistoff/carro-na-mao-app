@@ -6,11 +6,16 @@ import 'package:flutter/material.dart';
 
 class AddStickyNotesScreen extends StatefulWidget {
   const AddStickyNotesScreen(
-      {Key? key, this.animationController, required this.services})
+      {Key? key,
+      this.animationController,
+      required this.services,
+      required this.onSalve})
       : super(key: key);
 
   final AnimationController? animationController;
   final List<StickNote> services;
+  final VoidCallback onSalve;
+
   @override
   _AddStickyNotesScreenState createState() => _AddStickyNotesScreenState();
 }
@@ -58,9 +63,8 @@ class _AddStickyNotesScreenState extends State<AddStickyNotesScreen>
 
   void addAllListData() {
     setState(() {
-      print('passou depois do click');
       listViews.add(
-        AddStickyNotesView(services: widget.services),
+        AddStickyNotesView(services: widget.services, onSalve: widget.onSalve),
       );
     });
   }

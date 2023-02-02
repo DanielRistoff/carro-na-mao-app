@@ -83,6 +83,15 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
     return true;
   }
 
+  void getFilterServicesPending() {
+    var servicesNotPending = services
+        .where((item) => item.status != StickNodeStatusEnum.PENDENTE)
+        .toList();
+    for (var service in servicesNotPending) {
+      services.removeAt(services.indexOf(service));
+    }
+  }
+
   Widget bottomBar() {
     return Column(
       children: <Widget>[
@@ -94,11 +103,18 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
           addClick: () {
             // click do botao
             setState(() {
-              print('atualizou o click do botao');
               tabBody = AddStickyNotesScreen(
-                animationController: animationController,
-                services: services,
-              );
+                  animationController: animationController,
+                  services: services,
+                  onSalve: () {
+                    setState(() {
+                      getFilterServicesPending();
+                      tabBody = StickyNotesScreen(
+                        animationController: animationController,
+                        services: services,
+                      );
+                    });
+                  });
             });
           },
           changeIndex: (int index) {
@@ -127,6 +143,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
                 if (!mounted) {
                   return;
                 }
+                getFilterServicesPending();
                 setState(() {
                   tabBody = StickyNotesScreen(
                     animationController: animationController,
