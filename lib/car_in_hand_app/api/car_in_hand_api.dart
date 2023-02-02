@@ -26,8 +26,10 @@ class CarInHandApi {
         "date": stickNote.date,
         "hour": stickNote.hour,
         "kindOfService": stickNote.kindOfService.id,
+        "note": stickNote.note,
         "status": stickNote.status.name,
-        "created": DateFormat('yyyy-MM-dd HH:mm:ss').format(stickNote.created)
+        "creation_date":
+            DateFormat('yyyy-MM-dd HH:mm:ss').format(stickNote.created)
       }),
     );
   }
@@ -49,8 +51,12 @@ class CarInHandApi {
         "date": stickNote.date,
         "hour": stickNote.hour,
         "kindOfService": stickNote.kindOfService.id,
+        "note": stickNote.note,
         "status": stickNote.status.name,
-        "update": DateFormat('yyyy-MM-dd HH:mm:ss').format(stickNote.created)
+        "creation_date":
+            DateFormat('yyyy-MM-dd HH:mm:ss').format(stickNote.created),
+        "update_date": DateFormat('yyyy-MM-dd HH:mm:ss')
+            .format(stickNote.update ?? DateTime.now())
       }),
     );
   }
@@ -97,9 +103,9 @@ class CarInHandApi {
               description: sticknNoteD["kind_of_service"]["description"]),
           note: sticknNoteD["note"],
           status: getStickNodeStatusPorString(sticknNoteD["status"]),
-          created: DateTime.parse(sticknNoteD["created"]),
-          update: sticknNoteD["update"] != null
-              ? DateTime.parse(sticknNoteD["update"])
+          created: DateTime.parse(sticknNoteD["creation_date"]),
+          update: sticknNoteD["update_date"] != null
+              ? DateTime.parse(sticknNoteD["update_date"])
               : null);
       stickNotes.add(stickNote);
     }

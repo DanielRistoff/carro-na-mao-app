@@ -47,12 +47,6 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
     super.initState();
   }
 
-  void getServices(StickNote sn) {
-    setState(() {
-      services.remove(sn);
-    });
-  }
-
   @override
   void dispose() {
     animationController?.dispose();

@@ -70,6 +70,7 @@ class _StickyNotesScreenState extends State<StickyNotesScreen>
               listViews.removeAt(indexFinalize);
             });
             service.status = StickNodeStatusEnum.CONCLUIDO;
+            service.update = DateTime.now();
             CarInHandApi.updateStickNote(service);
           },
           onDelete: () {
@@ -78,6 +79,7 @@ class _StickyNotesScreenState extends State<StickyNotesScreen>
               listViews.removeAt(indexDelete);
             });
             service.status = StickNodeStatusEnum.CANCELADO;
+            service.update = DateTime.now();
             CarInHandApi.updateStickNote(service);
           }));
     }
@@ -91,14 +93,6 @@ class _StickyNotesScreenState extends State<StickyNotesScreen>
         .firstWhere((widget) => true, orElse: () => Container());
     return listViews.indexOf(serviceFinalizeWidget);
   }
-
-  // void updatelistNotes() {
-  //   CarInHandApi.getStickNotesByStatus(StickNodeStatusEnum.PENDENTE)
-  //       .then((res) => {
-  //             for (var service in res)
-  //               {listViews.add(ServicesView(stickNode: service))}
-  //           });
-  // }
 
   Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
