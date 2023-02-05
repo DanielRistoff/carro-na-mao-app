@@ -32,9 +32,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
 
   @override
   void initState() {
-    tabIconsList.forEach((TabIconData tab) {
-      tab.isSelected = false;
-    });
+    resetNavigation();
     tabIconsList[0].isSelected = true;
 
     animationController = AnimationController(
@@ -92,6 +90,44 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
     }
   }
 
+  void resetNavigation() {
+    tabIconsList.forEach((TabIconData tab) {
+      tab.isSelected = false;
+    });
+  }
+
+  void onUpdateStick() {
+    animationController?.reverse().then<dynamic>((data) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        resetNavigation();
+        tabBody = AddStickyNotesScreen(
+            animationController: animationController,
+            services: services,
+            onSalve: () {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  getFilterServicesPending();
+                  resetNavigation();
+                  tabIconsList[2].isSelected = true;
+                  tabBody = StickyNotesScreen(
+                    animationController: animationController,
+                    services: services,
+                    onUpdate: onUpdateStick,
+                  );
+                });
+              });
+            });
+      });
+    });
+  }
+
   Widget bottomBar() {
     return Column(
       children: <Widget>[
@@ -113,15 +149,12 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
                       }
                       setState(() {
                         getFilterServicesPending();
-                        tabIconsList.forEach((TabIconData tab) {
-                          if (tab.isSelected) {
-                            tab.isSelected = false;
-                          }
-                        });
+                        resetNavigation();
                         tabIconsList[2].isSelected = true;
                         tabBody = StickyNotesScreen(
                           animationController: animationController,
                           services: services,
+                          onUpdate: onUpdateStick,
                         );
                       });
                     });
@@ -159,6 +192,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
                   tabBody = StickyNotesScreen(
                     animationController: animationController,
                     services: services,
+                    onUpdate: onUpdateStick,
                   );
                 });
               });

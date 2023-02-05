@@ -5,12 +5,12 @@ import 'package:carronamao/car_in_hand_app/car_in_hand_app_theme.dart';
 import 'package:flutter/material.dart';
 
 class AddStickyNotesScreen extends StatefulWidget {
-  const AddStickyNotesScreen(
-      {Key? key,
-      this.animationController,
-      required this.services,
-      required this.onSalve})
-      : super(key: key);
+  const AddStickyNotesScreen({
+    Key? key,
+    this.animationController,
+    required this.services,
+    required this.onSalve,
+  }) : super(key: key);
 
   final AnimationController? animationController;
   final List<StickNote> services;
@@ -64,7 +64,10 @@ class _AddStickyNotesScreenState extends State<AddStickyNotesScreen>
   void addAllListData() {
     setState(() {
       listViews.add(
-        AddStickyNotesView(services: widget.services, onSalve: widget.onSalve),
+        AddStickyNotesView(
+          services: widget.services,
+          onSalve: widget.onSalve,
+        ),
       );
     });
   }

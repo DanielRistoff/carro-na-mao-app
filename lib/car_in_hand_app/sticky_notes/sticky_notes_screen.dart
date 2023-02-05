@@ -9,12 +9,16 @@ import 'package:carronamao/car_in_hand_app/ui_view/services_view.dart';
 import 'package:flutter/material.dart';
 
 class StickyNotesScreen extends StatefulWidget {
-  const StickyNotesScreen(
-      {Key? key, this.animationController, required this.services})
-      : super(key: key);
+  const StickyNotesScreen({
+    Key? key,
+    this.animationController,
+    required this.services,
+    required this.onUpdate,
+  }) : super(key: key);
 
   final AnimationController? animationController;
   final List<StickNote> services;
+  final VoidCallback onUpdate;
 
   @override
   _StickyNotesScreenState createState() => _StickyNotesScreenState();
@@ -64,25 +68,27 @@ class _StickyNotesScreenState extends State<StickyNotesScreen>
   void addAllListData() {
     for (var service in widget.services) {
       listViews.add(ServicesView(
-          stickNode: service,
-          onFinalize: () {
-            var indexFinalize = getIndexListViews(service);
-            setState(() {
-              listViews.removeAt(indexFinalize);
-            });
-            service.status = StickNodeStatusEnum.CONCLUIDO;
-            service.update = DateTime.now();
-            CarInHandApi.updateStickNote(service);
-          },
-          onDelete: () {
-            var indexDelete = getIndexListViews(service);
-            setState(() {
-              listViews.removeAt(indexDelete);
-            });
-            service.status = StickNodeStatusEnum.CANCELADO;
-            service.update = DateTime.now();
-            CarInHandApi.updateStickNote(service);
-          }));
+        stickNode: service,
+        onFinalize: () {
+          var indexFinalize = getIndexListViews(service);
+          setState(() {
+            listViews.removeAt(indexFinalize);
+          });
+          service.status = StickNodeStatusEnum.CONCLUIDO;
+          service.update = DateTime.now();
+          CarInHandApi.updateStickNote(service);
+        },
+        onDelete: () {
+          var indexDelete = getIndexListViews(service);
+          setState(() {
+            listViews.removeAt(indexDelete);
+          });
+          service.status = StickNodeStatusEnum.CANCELADO;
+          service.update = DateTime.now();
+          CarInHandApi.updateStickNote(service);
+        },
+        onUpdate: widget.onUpdate,
+      ));
     }
   }
 

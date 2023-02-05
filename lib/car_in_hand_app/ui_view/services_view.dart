@@ -1,24 +1,25 @@
-import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_home_screen.dart';
-import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
-import 'package:carronamao/car_in_hand_app/sticky_notes/add_sticky_notes_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
 import '../car_in_hand_app_theme.dart';
 
 class ServicesView extends StatelessWidget {
   final StickNote stickNode;
   final VoidCallback onFinalize;
   final VoidCallback onDelete;
+  final VoidCallback onUpdate;
 
   const ServicesView(
       {required this.stickNode,
       required this.onFinalize,
       required this.onDelete,
+      required this.onUpdate,
       Key? key})
       : super(key: key);
+
+  void onUpdateStick() {
+    onUpdate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +118,7 @@ class ServicesView extends StatelessWidget {
                             color: Color.fromARGB(255, 200, 206, 29),
                             icon: const Icon(Icons.edit),
                             tooltip: 'Alterar',
-                            onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Serviço alterado com sucesso!"),
-                              ));
-                            },
+                            onPressed: onUpdateStick,
                           ),
                         ),
                         Padding(
