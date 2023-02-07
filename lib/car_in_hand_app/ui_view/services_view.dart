@@ -1,7 +1,9 @@
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_home_screen.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../car_in_hand_app_theme.dart';
+import '../repository/sticky_repository.dart';
 
 class ServicesView extends StatelessWidget {
   final StickNote stickNode;
@@ -23,6 +25,8 @@ class ServicesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var stickyRepository = context.watch<StickyRepository>();
+
     return Column(
       children: <Widget>[
         Padding(
@@ -118,7 +122,11 @@ class ServicesView extends StatelessWidget {
                             color: Color.fromARGB(255, 200, 206, 29),
                             icon: const Icon(Icons.edit),
                             tooltip: 'Alterar',
-                            onPressed: onUpdateStick,
+                            onPressed: () {
+                              stickyRepository
+                                  .setIdStickyUpdate(stickNode.id ?? 0);
+                              onUpdate();
+                            },
                           ),
                         ),
                         Padding(

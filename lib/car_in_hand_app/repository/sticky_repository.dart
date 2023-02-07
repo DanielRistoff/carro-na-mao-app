@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class StickyRepository extends ChangeNotifier {
+class StickyRepository with ChangeNotifier {
   int _idStickyUpdate = 0;
 
   int get idStickyUpdate => _idStickyUpdate;

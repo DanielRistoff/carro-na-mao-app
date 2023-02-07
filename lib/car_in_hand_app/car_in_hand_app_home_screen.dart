@@ -5,10 +5,12 @@ import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:carronamao/car_in_hand_app/models/tabIcon_data.dart';
 import 'package:carronamao/car_in_hand_app/recall/recall_screen.dart';
+import 'package:carronamao/car_in_hand_app/repository/sticky_repository.dart';
 import 'package:carronamao/car_in_hand_app/sticky_notes/sticky_notes_screen.dart';
 import 'package:carronamao/car_in_hand_app/sticky_notes/add_sticky_notes_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 import 'api/car_in_hand_api.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'car_in_hand_app_theme.dart';
@@ -25,6 +27,8 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
   List<StickNote> services = <StickNote>[];
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
+
+  late StickyRepository stickyRepository;
 
   Widget tabBody = Container(
     color: CarInHandAppTheme.background,
@@ -53,6 +57,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    stickyRepository = context.watch<StickyRepository>();
     return Container(
       color: CarInHandAppTheme.background,
       child: Scaffold(
@@ -97,6 +102,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
   }
 
   void onUpdateStick() {
+    var idModify = stickyRepository.idStickyUpdate;
     animationController?.reverse().then<dynamic>((data) {
       if (!mounted) {
         return;

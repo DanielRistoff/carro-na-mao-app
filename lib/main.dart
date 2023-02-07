@@ -1,17 +1,24 @@
 import 'dart:io';
 import 'package:carronamao/app_theme.dart';
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_home_screen.dart';
+import 'package:carronamao/car_in_hand_app/repository/sticky_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then((_) => runApp(MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => StickyRepository()),
+        ],
+        child: const MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
