@@ -122,6 +122,8 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
                   return;
                 }
                 setState(() {
+                  stickyRepository.setIdStickyUpdate(0);
+                  idModify = stickyRepository.idStickyUpdate;
                   getFilterServicesPending();
                   resetNavigation();
                   tabIconsList[2].isSelected = true;
@@ -158,6 +160,8 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
                         return;
                       }
                       setState(() {
+                        stickyRepository.setIdStickyUpdate(0);
+                        idModify = stickyRepository.idStickyUpdate;
                         getFilterServicesPending();
                         resetNavigation();
                         tabIconsList[2].isSelected = true;
