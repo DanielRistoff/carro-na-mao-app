@@ -30,6 +30,8 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
 
   late StickyRepository stickyRepository;
 
+  int idModify = 0;
+
   Widget tabBody = Container(
     color: CarInHandAppTheme.background,
   );
@@ -102,7 +104,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
   }
 
   void onUpdateStick() {
-    var idModify = stickyRepository.idStickyUpdate;
+    idModify = stickyRepository.idStickyUpdate;
     animationController?.reverse().then<dynamic>((data) {
       if (!mounted) {
         return;
@@ -113,6 +115,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
         tabBody = AddStickyNotesScreen(
             animationController: animationController,
             services: services,
+            idModify: idModify,
             onSalve: () {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
@@ -148,6 +151,7 @@ class CarInHandAppHomeScreenState extends State<CarInHandAppHomeScreen>
               tabBody = AddStickyNotesScreen(
                   animationController: animationController,
                   services: services,
+                  idModify: idModify,
                   onSalve: () {
                     animationController?.reverse().then<dynamic>((data) {
                       if (!mounted) {

@@ -11,8 +11,13 @@ import '../car_in_hand_app_theme.dart';
 class AddStickyNotesView extends StatefulWidget {
   List<StickNote> services;
   final VoidCallback onSalve;
+  final int idModify;
 
-  AddStickyNotesView({required this.services, required this.onSalve, Key? key})
+  AddStickyNotesView(
+      {required this.services,
+      required this.onSalve,
+      required this.idModify,
+      Key? key})
       : super(key: key);
 
   @override
@@ -31,6 +36,8 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
 
     late String _dateSelected = '';
     late String _hourSelected = '';
+    late String _kindOfServiceInit = '';
+    late DateTime _dateCreateSticky = DateTime.now();
 
     List<String> _kindOfServices =
         KindOfServiceMocks().getKindOfServicesDescription();
@@ -38,18 +45,51 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
     KindOfService _kindOfServiceSelected = KindOfServiceMocks()
         .getKindOfServicePerDescription(description: "Outros");
 
+    StickNote getServiceOfList(int idService) {
+      var service = widget.services
+          .where((item) => item.id == idService)
+          .toList()
+          .firstWhere((widget) => true);
+      return service;
+    }
+
+    if (widget.idModify > 0) {
+      StickNote stickNote = getServiceOfList(widget.idModify);
+      _dateSelected = stickNote.date;
+      _hourSelected = stickNote.hour;
+      _noteController.text = stickNote.note!;
+      _dateController.text = stickNote.date;
+      _hoursController.text = stickNote.hour;
+      _kindOfServiceSelected = stickNote.kindOfService;
+      _kindOfServiceInit = stickNote.kindOfService.description;
+      _dateCreateSticky = stickNote.created;
+    }
+
     void salveStick() {
       if (_dateSelected != '' && _hourSelected != '') {
         StickNote sn = StickNote(
-            id: 1,
+            id: widget.idModify > 0 ? widget.idModify : 1,
             date: _dateSelected,
             hour: _hourSelected,
             kindOfService: _kindOfServiceSelected,
             note: _noteController.text,
             status: StickNodeStatusEnum.PENDENTE,
-            created: DateTime.now());
-        CarInHandApi.createStickNote(sn);
-        widget.services.add(sn);
+            created: _dateCreateSticky,
+            update: widget.idModify > 0 ? DateTime.now() : null);
+        if (widget.idModify > 0) {
+          CarInHandApi.updateStickNote(sn);
+          StickNote stickNoteUpdate = getServiceOfList(widget.idModify);
+          stickNoteUpdate.date = sn.date;
+          stickNoteUpdate.hour = sn.hour;
+          stickNoteUpdate.kindOfService = sn.kindOfService;
+          stickNoteUpdate.note = sn.note;
+          stickNoteUpdate.status = sn.status;
+          stickNoteUpdate.created = sn.created;
+          stickNoteUpdate.update = sn.update;
+        } else {
+          CarInHandApi.createStickNote(sn);
+          widget.services.add(sn);
+        }
       }
     }
 
@@ -254,6 +294,8 @@ class _AddStickyNotesViewState extends State<AddStickyNotesView> {
                                     width: 300,
                                     height: 70,
                                     child: Autocomplete<String>(
+                                      initialValue: TextEditingValue(
+                                          text: _kindOfServiceInit),
                                       optionsBuilder:
                                           (TextEditingValue textEditingValue) {
                                         if (textEditingValue.text == '') {

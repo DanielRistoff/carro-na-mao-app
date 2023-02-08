@@ -10,11 +10,13 @@ class AddStickyNotesScreen extends StatefulWidget {
     this.animationController,
     required this.services,
     required this.onSalve,
+    required this.idModify,
   }) : super(key: key);
 
   final AnimationController? animationController;
   final List<StickNote> services;
   final VoidCallback onSalve;
+  final int idModify;
 
   @override
   _AddStickyNotesScreenState createState() => _AddStickyNotesScreenState();
@@ -67,6 +69,7 @@ class _AddStickyNotesScreenState extends State<AddStickyNotesScreen>
         AddStickyNotesView(
           services: widget.services,
           onSalve: widget.onSalve,
+          idModify: widget.idModify,
         ),
       );
     });
