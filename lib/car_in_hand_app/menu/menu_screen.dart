@@ -1,5 +1,6 @@
 import 'package:carronamao/car_in_hand_app/ui_view/historic_view.dart';
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_theme.dart';
+import 'package:carronamao/car_in_hand_app/ui_view/page_personal_information_view.dart';
 import 'package:carronamao/car_in_hand_app/ui_view/page_under_construction_view.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   void addAllListData() {
     listViews.add(
-      const PageUnderConstructionView(),
+      const PagePersonalInformationView(),
     );
   }
 
