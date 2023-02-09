@@ -193,6 +193,48 @@ class _PageVehicleInformationViewState
                                   top: 16,
                                 ),
                                 child: Text(
+                                  "Placa",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: CarInHandAppTheme.fontName,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
+                                    letterSpacing: 0.0,
+                                    color: CarInHandAppTheme.nearlyDarkBlue,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 30,
+                                    right: 16,
+                                  ),
+                                  child: SizedBox(
+                                    width: 300,
+                                    height: 33,
+                                    child: CupertinoTextField(
+                                      controller: _noteController,
+                                      keyboardType: TextInputType.text,
+                                      textInputAction: TextInputAction.newline,
+                                      minLines: 1,
+                                      maxLines: 1,
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          Row(
+                            children: const <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 30,
+                                  right: 16,
+                                  top: 16,
+                                ),
+                                child: Text(
                                   "Kilometragem atual",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -264,6 +306,27 @@ class _PageVehicleInformationViewState
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
                                       maxLines: 1,
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 30,
+                                    right: 16,
+                                    top: 30,
+                                  ),
+                                  child: SizedBox(
+                                    width: 300,
+                                    child: CupertinoButton(
+                                      disabledColor:
+                                          CupertinoColors.inactiveGray,
+                                      onPressed: () {},
+                                      color: const Color.fromARGB(
+                                          255, 91, 88, 251),
+                                      child: const Text('Salvar'),
                                     ),
                                   )),
                             ],

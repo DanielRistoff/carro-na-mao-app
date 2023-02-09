@@ -1,8 +1,15 @@
-import 'package:carronamao/car_in_hand_app/ui_view/historic_view.dart';
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_theme.dart';
+import 'package:carronamao/car_in_hand_app/ui_view/page_%20vehicle_information_view.dart';
 import 'package:carronamao/car_in_hand_app/ui_view/page_personal_information_view.dart';
-import 'package:carronamao/car_in_hand_app/ui_view/page_under_construction_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+enum Sky { personalInformation, vehicleInformation }
+
+Map<Sky, Color> skyColors = <Sky, Color>{
+  Sky.personalInformation: const Color(0xFFF2F3F8),
+  Sky.vehicleInformation: const Color(0xFFF2F3F8),
+};
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key, this.animationController}) : super(key: key);
@@ -18,6 +25,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
+
+  Sky _selectedSegment = Sky.personalInformation;
 
   @override
   void initState() {
@@ -53,9 +62,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   void addAllListData() {
-    listViews.add(
-      const PagePersonalInformationView(),
-    );
+    listViews.add(const PagePersonalInformationView());
   }
 
   Future<bool> getData() async {
@@ -67,16 +74,67 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Container(
       color: CarInHandAppTheme.background,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: <Widget>[
-            getMainListViewUI(),
-            getAppBarUI(),
-            SizedBox(
-              height: MediaQuery.of(context).padding.bottom,
-            )
-          ],
+      child: CupertinoPageScaffold(
+        backgroundColor: skyColors[_selectedSegment],
+        navigationBar: CupertinoNavigationBar(
+          middle: CupertinoSlidingSegmentedControl<Sky>(
+            backgroundColor: CupertinoColors.systemGrey2,
+            thumbColor: skyColors[_selectedSegment]!,
+            groupValue: _selectedSegment,
+            onValueChanged: (Sky? value) {
+              if (value != null) {
+                setState(() {
+                  _selectedSegment = value;
+                  listViews.removeAt(0);
+                  if (_selectedSegment == Sky.personalInformation) {
+                    listViews.add(const PagePersonalInformationView());
+                  } else {
+                    listViews.add(const PageVehicleInformationView());
+                  }
+                });
+              }
+            },
+            children: const <Sky, Widget>{
+              Sky.personalInformation: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: Text(
+                  'Cadastro',
+                  style: TextStyle(
+                    fontFamily: CarInHandAppTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    letterSpacing: 0.0,
+                    color: CarInHandAppTheme.nearlyDarkBlue,
+                  ),
+                ),
+              ),
+              Sky.vehicleInformation: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: Text(
+                  'Veículo',
+                  style: TextStyle(
+                    fontFamily: CarInHandAppTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    letterSpacing: 0.0,
+                    color: CarInHandAppTheme.nearlyDarkBlue,
+                  ),
+                ),
+              ),
+            },
+          ),
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: <Widget>[
+              getMainListViewUI(),
+              getAppBarUI(),
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -93,8 +151,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             controller: scrollController,
             padding: EdgeInsets.only(
               top: AppBar().preferredSize.height +
-                  MediaQuery.of(context).padding.top +
-                  24,
+                  MediaQuery.of(context).padding.top -
+                  45,
               bottom: 62 + MediaQuery.of(context).padding.bottom,
             ),
             itemCount: listViews.length,
