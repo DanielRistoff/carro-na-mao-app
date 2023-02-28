@@ -1,8 +1,3 @@
-import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
-import 'package:carronamao/car_in_hand_app/mocks/kind_of_service_mocks.dart';
-import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
-import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
-import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
