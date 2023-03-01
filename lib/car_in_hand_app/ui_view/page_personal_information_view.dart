@@ -1,10 +1,16 @@
+// ignore_for_file: no_leading_underscores_fol_identifiers, no_leading_underscores_for_local_identifiers
+
+import 'package:carronamao/car_in_hand_app/models/person_information.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../car_in_hand_app_theme.dart';
 
 class PagePersonalInformationView extends StatefulWidget {
-  const PagePersonalInformationView({Key? key}) : super(key: key);
+  final PersonInformation personInformation;
+  final VoidCallback onSalve;
+
+  const PagePersonalInformationView(
+      {required this.personInformation, required this.onSalve, Key? key})
+      : super(key: key);
 
   @override
   State<PagePersonalInformationView> createState() =>
@@ -18,12 +24,29 @@ class _PagePersonalInformationViewState
 
   @override
   Widget build(BuildContext context) {
-    late TextEditingController _dateController =
+    late TextEditingController _nameController =
         TextEditingController(text: '');
-    late TextEditingController _hoursController =
+    late TextEditingController _phoneNumberController =
         TextEditingController(text: '');
-    late TextEditingController _noteController =
+    late TextEditingController _loginController =
         TextEditingController(text: '');
+    late TextEditingController _passwordController =
+        TextEditingController(text: '');
+
+    if (widget.personInformation.id! > 0) {
+      _nameController.text = widget.personInformation.name!;
+      _phoneNumberController.text = widget.personInformation.phoneNumber!;
+      _loginController.text = widget.personInformation.login!;
+      _passwordController.text = widget.personInformation.password!;
+    }
+
+    void onSalvePersonalInformation() {
+      widget.personInformation.name = _nameController.text;
+      widget.personInformation.phoneNumber = _phoneNumberController.text;
+      widget.personInformation.login = _loginController.text;
+      widget.personInformation.password = _passwordController.text;
+      widget.onSalve();
+    }
 
     return Column(
       children: <Widget>[
@@ -89,7 +112,7 @@ class _PagePersonalInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _nameController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -131,7 +154,7 @@ class _PagePersonalInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _phoneNumberController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -173,7 +196,7 @@ class _PagePersonalInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _loginController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -215,7 +238,7 @@ class _PagePersonalInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _passwordController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -309,7 +332,7 @@ class _PagePersonalInformationViewState
                                     child: CupertinoButton(
                                       disabledColor:
                                           CupertinoColors.inactiveGray,
-                                      onPressed: () {},
+                                      onPressed: onSalvePersonalInformation,
                                       color: const Color.fromARGB(
                                           255, 91, 88, 251),
                                       child: const Text('Salvar'),

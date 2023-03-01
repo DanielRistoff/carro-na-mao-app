@@ -1,12 +1,16 @@
+import 'package:carronamao/car_in_hand_app/models/brand_model_year.dart';
+
 class Vehicle {
   final int? id;
-  final String? board;
-  final int? current_mileage;
-  final int? average_monthly_mileage;
+  String? board;
+  int? currentMileage;
+  int? averageMonthlyMileage;
+  final BrandModelYear? brandModelYear;
   Vehicle({
     this.id,
     this.board,
-    this.current_mileage,
-    this.average_monthly_mileage,
+    this.currentMileage,
+    this.averageMonthlyMileage,
+    this.brandModelYear,
   });
 }

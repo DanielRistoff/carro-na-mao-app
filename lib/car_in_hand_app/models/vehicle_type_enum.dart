@@ -11,7 +11,7 @@ String getDescriptionVehicleType(VehicleTypeEnum vehicleType) {
     case VehicleTypeEnum.MOT:
       return 'Moto';
     case VehicleTypeEnum.CAM:
-      return 'Caminhão';
+      return 'Caminhao';
     case VehicleTypeEnum.CAR:
       return 'Carro';
   }
@@ -19,11 +19,11 @@ String getDescriptionVehicleType(VehicleTypeEnum vehicleType) {
 
 VehicleTypeEnum getVehicleTypePorString(String vehicleType) {
   switch (vehicleType) {
-    case "MOT":
+    case "Moto":
       return VehicleTypeEnum.MOT;
-    case "CAM":
+    case "Caminhao":
       return VehicleTypeEnum.CAM;
-    case "CAR":
+    case "Carro":
       return VehicleTypeEnum.CAR;
   }
   return VehicleTypeEnum.CAR;

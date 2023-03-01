@@ -1,4 +1,3 @@
-import 'package:carronamao/car_in_hand_app/car_in_hand_app_home_screen.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

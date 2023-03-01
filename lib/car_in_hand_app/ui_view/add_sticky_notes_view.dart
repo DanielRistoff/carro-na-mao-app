@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
 import 'package:carronamao/car_in_hand_app/mocks/kind_of_service_mocks.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';

@@ -1,14 +1,14 @@
 class PersonInformation {
-  final int? id;
-  final String? name;
-  final String? phoneNumber;
-  final String? login;
-  final String? password;
-  final String? email;
-  final bool notify;
-  final bool controlMaintenance;
-  final DateTime created;
-  final DateTime? update;
+  int? id;
+  String? name;
+  String? phoneNumber;
+  String? login;
+  String? password;
+  String? email;
+  bool notify;
+  bool controlMaintenance;
+  DateTime createdDate;
+  DateTime? updateDate;
   PersonInformation({
     this.id,
     this.name,
@@ -18,7 +18,7 @@ class PersonInformation {
     this.email,
     required this.notify,
     required this.controlMaintenance,
-    required this.created,
-    this.update,
+    required this.createdDate,
+    this.updateDate,
   });
 }

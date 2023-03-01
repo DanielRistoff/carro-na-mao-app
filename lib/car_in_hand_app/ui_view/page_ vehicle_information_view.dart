@@ -1,15 +1,16 @@
-import 'package:carronamao/car_in_hand_app/api/car_in_hand_api.dart';
-import 'package:carronamao/car_in_hand_app/mocks/kind_of_service_mocks.dart';
-import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
-import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
-import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
+// ignore_for_file: unused_localble, no_leading_underscores_for_local_identifiers
+
+import 'package:carronamao/car_in_hand_app/models/vehicle.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../car_in_hand_app_theme.dart';
 
 class PageVehicleInformationView extends StatefulWidget {
-  const PageVehicleInformationView({Key? key}) : super(key: key);
+  final Vehicle vehicle;
+  final VoidCallback onSalve;
+
+  const PageVehicleInformationView(
+      {required this.vehicle, required this.onSalve, Key? key})
+      : super(key: key);
 
   @override
   State<PageVehicleInformationView> createState() =>
@@ -20,12 +21,49 @@ class _PageVehicleInformationViewState
     extends State<PageVehicleInformationView> {
   @override
   Widget build(BuildContext context) {
-    late TextEditingController _dateController =
+    late TextEditingController _brandController =
         TextEditingController(text: '');
-    late TextEditingController _hoursController =
+    late TextEditingController _modelController =
         TextEditingController(text: '');
-    late TextEditingController _noteController =
+    late TextEditingController _yearController =
         TextEditingController(text: '');
+    late TextEditingController _boardController =
+        TextEditingController(text: '');
+    late TextEditingController _currentMileageController =
+        TextEditingController(text: '');
+    late TextEditingController _averageMonthlyMileageController =
+        TextEditingController(text: '');
+
+    if (widget.vehicle.id! > 0) {
+      _brandController.text =
+          widget.vehicle.brandModelYear!.brandModel.brand.description;
+      _modelController.text =
+          widget.vehicle.brandModelYear!.brandModel.description;
+      _yearController.text = widget.vehicle.brandModelYear!.year;
+      _boardController.text = widget.vehicle.board!;
+      _currentMileageController.text = widget.vehicle.currentMileage.toString();
+      _averageMonthlyMileageController.text =
+          widget.vehicle.averageMonthlyMileage.toString();
+    }
+
+    void onSalvePersonalInformation() {
+      widget.vehicle.brandModelYear!.brandModel.brand.description =
+          _brandController.text;
+      widget.vehicle.brandModelYear!.brandModel.description =
+          _modelController.text;
+      widget.vehicle.brandModelYear!.year = _yearController.text;
+      widget.vehicle.board = _boardController.text;
+      widget.vehicle.currentMileage = int.parse(
+          _currentMileageController.text.isEmpty
+              ? '0'
+              : _currentMileageController.text);
+      ;
+      widget.vehicle.averageMonthlyMileage = int.parse(
+          _averageMonthlyMileageController.text.isEmpty
+              ? '0'
+              : _averageMonthlyMileageController.text);
+      widget.onSalve();
+    }
 
     return Column(
       children: <Widget>[
@@ -91,7 +129,7 @@ class _PageVehicleInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _brandController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -133,7 +171,7 @@ class _PageVehicleInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _modelController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -175,7 +213,7 @@ class _PageVehicleInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _yearController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -217,7 +255,7 @@ class _PageVehicleInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _boardController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -259,7 +297,7 @@ class _PageVehicleInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller: _currentMileageController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,
@@ -301,7 +339,8 @@ class _PageVehicleInformationViewState
                                     width: 300,
                                     height: 33,
                                     child: CupertinoTextField(
-                                      controller: _noteController,
+                                      controller:
+                                          _averageMonthlyMileageController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.newline,
                                       minLines: 1,

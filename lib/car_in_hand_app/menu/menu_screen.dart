@@ -1,4 +1,10 @@
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_theme.dart';
+import 'package:carronamao/car_in_hand_app/models/brand.dart';
+import 'package:carronamao/car_in_hand_app/models/brand_model.dart';
+import 'package:carronamao/car_in_hand_app/models/brand_model_year.dart';
+import 'package:carronamao/car_in_hand_app/models/person_information.dart';
+import 'package:carronamao/car_in_hand_app/models/vehicle.dart';
+import 'package:carronamao/car_in_hand_app/models/vehicle_type_enum.dart';
 import 'package:carronamao/car_in_hand_app/ui_view/page_%20vehicle_information_view.dart';
 import 'package:carronamao/car_in_hand_app/ui_view/page_personal_information_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +31,38 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
   double topBarOpacity = 0.0;
+
+  PersonInformation personInformation = PersonInformation(
+    id: 0,
+    name: '',
+    phoneNumber: '',
+    login: '',
+    password: '',
+    email: '',
+    notify: true,
+    controlMaintenance: true,
+    createdDate: DateTime.now(),
+    updateDate: DateTime.now(),
+  );
+
+  Vehicle vehicle = Vehicle(
+      id: 0,
+      board: '',
+      currentMileage: 0,
+      averageMonthlyMileage: 0,
+      brandModelYear: BrandModelYear(
+        id: 0,
+        brandModel: BrandModel(
+          id: 0,
+          brand: Brand(
+            id: 0,
+            description: 'teste',
+          ),
+          description: 'teste',
+          vehicleType: VehicleTypeEnum.CAM,
+        ),
+        year: '2010',
+      ));
 
   Sky _selectedSegment = Sky.personalInformation;
 
@@ -62,7 +100,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   void addAllListData() {
-    listViews.add(const PagePersonalInformationView());
+    listViews.add(PagePersonalInformationView(
+        personInformation: personInformation, onSalve: () {}));
   }
 
   Future<bool> getData() async {
@@ -87,9 +126,11 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   _selectedSegment = value;
                   listViews.removeAt(0);
                   if (_selectedSegment == Sky.personalInformation) {
-                    listViews.add(const PagePersonalInformationView());
+                    listViews.add(PagePersonalInformationView(
+                        personInformation: personInformation, onSalve: () {}));
                   } else {
-                    listViews.add(const PageVehicleInformationView());
+                    listViews.add(PageVehicleInformationView(
+                        vehicle: vehicle, onSalve: () {}));
                   }
                 });
               }

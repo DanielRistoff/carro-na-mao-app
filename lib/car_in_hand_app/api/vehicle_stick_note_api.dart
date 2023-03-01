@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
-class CarInHandApi {
-  static void createStickNote(StickNote stickNote) async {
+class VehicleStickNoteApi {
+  static void createPersonInformation(StickNote stickNote) async {
     var uri = Uri(
       scheme: 'http',
       host: '10.0.2.2',
       port: 4200,
-      path: '/v1/public/stick-note/',
+      path: '/v1/public/person-information/',
     );
 
     await http.post(
@@ -33,12 +34,12 @@ class CarInHandApi {
     );
   }
 
-  static void updateStickNote(StickNote stickNote) async {
+  static void updatePersonInformation(StickNote stickNote) async {
     var uri = Uri(
       scheme: 'http',
       host: '10.0.2.2',
       port: 4200,
-      path: '/v1/public/stick-note/${stickNote.id}',
+      path: '/v1/public/person-information/${stickNote.id}',
     );
 
     http.Response response = await http.put(
@@ -60,21 +61,7 @@ class CarInHandApi {
     );
   }
 
-  static Future<List<StickNote>> getStickNotes() async {
-    var uri = Uri(
-      scheme: 'http',
-      host: '10.0.2.2',
-      port: 4200,
-      path: '/v1/public/stick-note/',
-    );
-
-    http.Response response = await http.get(uri);
-    var dadosJson = json.decode(response.body);
-
-    return prepareListStickNote(dadosJson);
-  }
-
-  static Future<ObservableList<StickNote>> getStickNotesByStatus(
+  static Future<ObservableList<StickNote>> getPersonInformationByLogin(
       StickNodeStatusEnum status) async {
     var uri = Uri(
       scheme: 'http',

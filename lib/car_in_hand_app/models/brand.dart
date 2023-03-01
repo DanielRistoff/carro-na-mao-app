@@ -1,6 +1,6 @@
 class Brand {
   final int id;
-  final String description;
+  String description;
 
   Brand({
     required this.id,
