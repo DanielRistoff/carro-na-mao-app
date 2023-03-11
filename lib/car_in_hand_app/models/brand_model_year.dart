@@ -9,4 +9,12 @@ class BrandModelYear {
     required this.brandModel,
     required this.year,
   });
+
+  factory BrandModelYear.fromJson(Map<String, dynamic> json) {
+    return BrandModelYear(
+      id: json['id'] as int,
+      brandModel: BrandModel.fromJson(json['brand_model']),
+      year: json['year'] as String,
+    );
+  }
 }

@@ -10,4 +10,12 @@ class PersonVehicle {
     required this.personInformation,
     required this.vehicle,
   });
+
+  factory PersonVehicle.fromJson(Map<String, dynamic> json) {
+    return PersonVehicle(
+      id: json['id'] as int,
+      personInformation: PersonInformation.fromJson(json['person_information']),
+      vehicle: Vehicle.fromJson(json['vehicle']),
+    );
+  }
 }

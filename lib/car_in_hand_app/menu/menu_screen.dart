@@ -1,3 +1,5 @@
+import 'package:carronamao/car_in_hand_app/api/person_information_api.dart';
+import 'package:carronamao/car_in_hand_app/api/vehicle_api.dart';
 import 'package:carronamao/car_in_hand_app/car_in_hand_app_theme.dart';
 import 'package:carronamao/car_in_hand_app/models/brand.dart';
 import 'package:carronamao/car_in_hand_app/models/brand_model.dart';
@@ -101,7 +103,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   void addAllListData() {
     listViews.add(PagePersonalInformationView(
-        personInformation: personInformation, onSalve: () {}));
+        personInformation: personInformation,
+        onSalve: () {
+          PersonInformationApi.createPersonInformation(personInformation);
+        }));
   }
 
   Future<bool> getData() async {
@@ -127,10 +132,17 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   listViews.removeAt(0);
                   if (_selectedSegment == Sky.personalInformation) {
                     listViews.add(PagePersonalInformationView(
-                        personInformation: personInformation, onSalve: () {}));
+                        personInformation: personInformation,
+                        onSalve: () {
+                          PersonInformationApi.createPersonInformation(
+                              personInformation);
+                        }));
                   } else {
                     listViews.add(PageVehicleInformationView(
-                        vehicle: vehicle, onSalve: () {}));
+                        vehicle: vehicle,
+                        onSalve: () {
+                          VehicleApi.createVehicle(vehicle);
+                        }));
                   }
                 });
               }

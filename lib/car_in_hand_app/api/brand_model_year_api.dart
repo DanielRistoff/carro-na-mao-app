@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
+import 'package:carronamao/car_in_hand_app/utils/api_util.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -10,15 +11,8 @@ import 'package:mobx/mobx.dart';
 
 class BrandModelYearApi {
   static void createPersonInformation(StickNote stickNote) async {
-    var uri = Uri(
-      scheme: 'http',
-      host: '10.0.2.2',
-      port: 4200,
-      path: '/v1/public/person-information/',
-    );
-
     await http.post(
-      uri,
+      ApiUtil.mountUri('/v1/public/person-information/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -35,15 +29,8 @@ class BrandModelYearApi {
   }
 
   static void updatePersonInformation(StickNote stickNote) async {
-    var uri = Uri(
-      scheme: 'http',
-      host: '10.0.2.2',
-      port: 4200,
-      path: '/v1/public/person-information/${stickNote.id}',
-    );
-
     http.Response response = await http.put(
-      uri,
+      ApiUtil.mountUri('/v1/public/person-information/${stickNote.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -63,15 +50,8 @@ class BrandModelYearApi {
 
   static Future<ObservableList<StickNote>> getPersonInformationByLogin(
       StickNodeStatusEnum status) async {
-    var uri = Uri(
-      scheme: 'http',
-      host: '10.0.2.2',
-      port: 4200,
-      path:
-          '/v1/public/stick-note/status/${getDescriptionStickNodeStatus(status).toUpperCase()}',
-    );
-
-    http.Response response = await http.get(uri);
+    http.Response response = await http.get(ApiUtil.mountUri(
+        '/v1/public/stick-note/status/${getDescriptionStickNodeStatus(status).toUpperCase()}'));
     var dadosJson = json.decode(response.body);
 
     return prepareListStickNote(dadosJson);

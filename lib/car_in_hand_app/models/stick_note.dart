@@ -1,7 +1,9 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
+import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/kind_of_service.dart';
+import 'package:carronamao/car_in_hand_app/utils/data_util.dart';
 
 class StickNote {
   int? id;
@@ -30,5 +32,32 @@ class StickNote {
 
   String getDescriptionStickNote() {
     return "${getDateHourFormatted()} - ${getDescriptionStickNodeStatus(status)} ${(note != '' && note != null) ? (" - $note") : ""} ";
+  }
+
+  factory StickNote.fromJson(Map<String, dynamic> json) {
+    return StickNote(
+        id: json['id'] as int,
+        date: json['date'] as String,
+        hour: json['hour'] as String,
+        kindOfService: KindOfService.fromJson(json["kind_of_service"]),
+        note: json['note'],
+        status: getStickNodeStatusPorString(json["status"]),
+        created: DateTime.parse(json["creation_date"]),
+        update: DataUtil.convertStringToDateTimeOrNull(json["update_date"]));
+  }
+
+  static String toJsonString(StickNote stickNote) {
+    return jsonEncode(<String, dynamic>{
+      "date": stickNote.date,
+      "hour": stickNote.hour,
+      "kindOfService": stickNote.kindOfService.id,
+      "note": stickNote.note,
+      "status": stickNote.status.name,
+      "creation_date":
+          DataUtil.formatDateyyyyMMddHHmmssString(stickNote.created),
+      "update_date": DataUtil.formatDateyyyyMMddHHmmssString(
+        stickNote.update ?? DateTime.now(),
+      ),
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'package:carronamao/car_in_hand_app/utils/data_util.dart';
+
 class PersonInformation {
   int? id;
   String? name;
@@ -9,6 +11,7 @@ class PersonInformation {
   bool controlMaintenance;
   DateTime createdDate;
   DateTime? updateDate;
+
   PersonInformation({
     this.id,
     this.name,
@@ -21,4 +24,19 @@ class PersonInformation {
     required this.createdDate,
     this.updateDate,
   });
+
+  factory PersonInformation.fromJson(Map<String, dynamic> json) {
+    return PersonInformation(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      phoneNumber: json['phone_number'] as String,
+      login: json['login'] as String,
+      password: json['password'] as String,
+      email: json['email'] as String,
+      notify: json['notify'] as bool,
+      controlMaintenance: json['control_maintenance'] as bool,
+      createdDate: json['created_date'] as DateTime,
+      updateDate: DataUtil.convertStringToDateTimeOrNull(json['update_date']),
+    );
+  }
 }

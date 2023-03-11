@@ -362,7 +362,7 @@ class _PageVehicleInformationViewState
                                     child: CupertinoButton(
                                       disabledColor:
                                           CupertinoColors.inactiveGray,
-                                      onPressed: () {},
+                                      onPressed: onSalvePersonalInformation,
                                       color: const Color.fromARGB(
                                           255, 91, 88, 251),
                                       child: const Text('Salvar'),

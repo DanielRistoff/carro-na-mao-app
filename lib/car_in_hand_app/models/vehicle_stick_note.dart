@@ -11,4 +11,12 @@ class VehicleStickNote {
     required this.vehicle,
     required this.stickNote,
   });
+
+  factory VehicleStickNote.fromJson(Map<String, dynamic> json) {
+    return VehicleStickNote(
+      id: json['id'] as int,
+      vehicle: Vehicle.fromJson(json['vehicle']),
+      stickNote: StickNote.fromJson(json['stick_note']),
+    );
+  }
 }
