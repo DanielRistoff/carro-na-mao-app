@@ -11,10 +11,7 @@ class PersonVehicleApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        "person_information_id": personVehicle.personInformation.id,
-        "vehicle_id": personVehicle.vehicle.id
-      }),
+      body: PersonVehicle.toJsonString(personVehicle),
     );
   }
 
@@ -24,10 +21,7 @@ class PersonVehicleApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        "person_information_id": personVehicle.personInformation.id,
-        "vehicle_id": personVehicle.vehicle.id
-      }),
+      body: PersonVehicle.toJsonString(personVehicle),
     );
   }
 

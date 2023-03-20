@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/stick_node_status_enum.dart';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:carronamao/car_in_hand_app/utils/api_util.dart';
-import 'package:carronamao/car_in_hand_app/utils/data_util.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
 class CarInHandApi {
@@ -14,15 +12,7 @@ class CarInHandApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        "date": stickNote.date,
-        "hour": stickNote.hour,
-        "kindOfService": stickNote.kindOfService.id,
-        "note": stickNote.note,
-        "status": stickNote.status.name,
-        "creation_date":
-            DataUtil.formatDateyyyyMMddHHmmssString(stickNote.created),
-      }),
+      body: StickNote.toJsonString(stickNote, false),
     );
   }
 
@@ -32,7 +22,7 @@ class CarInHandApi {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: StickNote.toJsonString(stickNote));
+        body: StickNote.toJsonString(stickNote, true));
   }
 
   static Future<List<StickNote>> getStickNotes() async {

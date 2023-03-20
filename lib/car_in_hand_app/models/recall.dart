@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carronamao/car_in_hand_app/utils/data_util.dart';
 
 class Recall {
@@ -23,5 +25,21 @@ class Recall {
       createdDate: json['created_date'] as DateTime,
       updateDate: DataUtil.convertStringToDateTimeOrNull(json['update_date']),
     );
+  }
+
+  static String toJsonString(Recall recall, bool update) {
+    Map<String, dynamic> json = {
+      "start_year": recall.startYear,
+      "stop_year": recall.stopYear,
+      "created_date":
+          DataUtil.formatDateyyyyMMddHHmmssString(recall.createdDate),
+    };
+
+    if (update) {
+      json["update_date"] = DataUtil.formatDateyyyyMMddHHmmssString(
+        recall.updateDate ?? DateTime.now(),
+      );
+    }
+    return jsonEncode(json);
   }
 }

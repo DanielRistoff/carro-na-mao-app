@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/person_information.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:carronamao/car_in_hand_app/utils/api_util.dart';
 
@@ -14,17 +13,7 @@ class PersonInformationApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        "name": personInformation.name,
-        "phone_number": personInformation.phoneNumber,
-        "login": personInformation.login,
-        "password": personInformation.password,
-        "email": personInformation.email,
-        "notify": personInformation.notify,
-        "control_maintenance": personInformation.controlMaintenance,
-        "creation_date": DateFormat('yyyy-MM-dd HH:mm:ss')
-            .format(personInformation.createdDate),
-      }),
+      body: PersonInformation.toJsonString(personInformation, false),
     );
   }
 
@@ -36,19 +25,7 @@ class PersonInformationApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        "name": personInformation.name,
-        "phone_number": personInformation.phoneNumber,
-        "login": personInformation.login,
-        "password": personInformation.password,
-        "email": personInformation.email,
-        "notify": personInformation.notify,
-        "control_maintenance": personInformation.controlMaintenance,
-        "creation_date": DateFormat('yyyy-MM-dd HH:mm:ss')
-            .format(personInformation.createdDate),
-        "update_date": DateFormat('yyyy-MM-dd HH:mm:ss')
-            .format(personInformation.updateDate ?? DateTime.now())
-      }),
+      body: PersonInformation.toJsonString(personInformation, true),
     );
   }
 

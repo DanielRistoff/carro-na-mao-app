@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Brand {
   final int id;
   String description;
@@ -12,5 +14,12 @@ class Brand {
       id: json['id'] as int,
       description: json['description'] as String,
     );
+  }
+
+  static String toJsonString(Brand brand) {
+    Map<String, dynamic> json = {
+      "description": brand.description,
+    };
+    return jsonEncode(json);
   }
 }

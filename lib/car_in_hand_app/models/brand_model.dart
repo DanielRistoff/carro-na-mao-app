@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carronamao/car_in_hand_app/models/brand.dart';
 import 'package:carronamao/car_in_hand_app/models/vehicle_type_enum.dart';
 
@@ -20,5 +22,14 @@ class BrandModel {
       description: json['description'] as String,
       vehicleType: getVehicleTypePerString(json["vehicle_type"]),
     );
+  }
+
+  static String toJsonString(BrandModel brandModel) {
+    Map<String, dynamic> json = {
+      "brand": brandModel.brand.id,
+      "description": brandModel.description,
+      "vehicleType": brandModel.vehicleType.name,
+    };
+    return jsonEncode(json);
   }
 }

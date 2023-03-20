@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/stick_note.dart';
 import 'package:carronamao/car_in_hand_app/models/vehicle.dart';
 
@@ -18,5 +19,13 @@ class VehicleStickNote {
       vehicle: Vehicle.fromJson(json['vehicle']),
       stickNote: StickNote.fromJson(json['stick_note']),
     );
+  }
+
+  static String toJsonString(VehicleStickNote vehicleStickNote) {
+    Map<String, dynamic> json = {
+      "vehicle": vehicleStickNote.vehicle.id,
+      "stick_note": vehicleStickNote.stickNote.id,
+    };
+    return jsonEncode(json);
   }
 }

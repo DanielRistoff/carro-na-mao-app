@@ -46,8 +46,8 @@ class StickNote {
         update: DataUtil.convertStringToDateTimeOrNull(json["update_date"]));
   }
 
-  static String toJsonString(StickNote stickNote) {
-    return jsonEncode(<String, dynamic>{
+  static String toJsonString(StickNote stickNote, bool update) {
+    Map<String, dynamic> json = {
       "date": stickNote.date,
       "hour": stickNote.hour,
       "kindOfService": stickNote.kindOfService.id,
@@ -55,9 +55,14 @@ class StickNote {
       "status": stickNote.status.name,
       "creation_date":
           DataUtil.formatDateyyyyMMddHHmmssString(stickNote.created),
-      "update_date": DataUtil.formatDateyyyyMMddHHmmssString(
+    };
+
+    if (update) {
+      json["update_date"] = DataUtil.formatDateyyyyMMddHHmmssString(
         stickNote.update ?? DateTime.now(),
-      ),
-    });
+      );
+    }
+
+    return jsonEncode(json);
   }
 }

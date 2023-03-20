@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/person_information.dart';
 import 'package:carronamao/car_in_hand_app/models/vehicle.dart';
 
@@ -17,5 +18,13 @@ class PersonVehicle {
       personInformation: PersonInformation.fromJson(json['person_information']),
       vehicle: Vehicle.fromJson(json['vehicle']),
     );
+  }
+
+  static String toJsonString(PersonVehicle personVehicle) {
+    Map<String, dynamic> json = {
+      "person_information": personVehicle.personInformation.id,
+      "vehicle": personVehicle.vehicle.id,
+    };
+    return jsonEncode(json);
   }
 }

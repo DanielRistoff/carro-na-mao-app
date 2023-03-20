@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/utils/data_util.dart';
 
 class PersonInformation {
@@ -38,5 +39,27 @@ class PersonInformation {
       createdDate: json['created_date'] as DateTime,
       updateDate: DataUtil.convertStringToDateTimeOrNull(json['update_date']),
     );
+  }
+
+  static String toJsonString(PersonInformation personInformation, bool update) {
+    Map<String, dynamic> json = {
+      "name": personInformation.name,
+      "phone_number": personInformation.phoneNumber,
+      "login": personInformation.login,
+      "password": personInformation.password,
+      "email": personInformation.email,
+      "notify": personInformation.notify,
+      "control_maintenance": personInformation.controlMaintenance,
+      "creation_date": DataUtil.formatDateyyyyMMddHHmmssString(
+          personInformation.createdDate),
+    };
+
+    if (update) {
+      json["update_date"] = DataUtil.formatDateyyyyMMddHHmmssString(
+        personInformation.updateDate ?? DateTime.now(),
+      );
+    }
+
+    return jsonEncode(json);
   }
 }

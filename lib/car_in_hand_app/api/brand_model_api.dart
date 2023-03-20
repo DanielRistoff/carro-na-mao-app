@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:carronamao/car_in_hand_app/models/brand_model.dart';
 import 'package:carronamao/car_in_hand_app/utils/api_util.dart';
 import 'package:http/http.dart' as http;
@@ -11,11 +9,7 @@ class BrandModelApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        "brand_id": brandModel.id,
-        "description": brandModel.description,
-        "vehicle_type": brandModel.vehicleType
-      }),
+      body: BrandModel.toJsonString(brandModel),
     );
   }
 
@@ -25,11 +19,7 @@ class BrandModelApi {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        "brand_id": brandModel.id,
-        "description": brandModel.description,
-        "vehicle_type": brandModel.vehicleType
-      }),
+      body: BrandModel.toJsonString(brandModel),
     );
   }
 }

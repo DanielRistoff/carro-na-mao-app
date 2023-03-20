@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/brand_model.dart';
 
 class BrandModelYear {
@@ -16,5 +17,13 @@ class BrandModelYear {
       brandModel: BrandModel.fromJson(json['brand_model']),
       year: json['year'] as String,
     );
+  }
+
+  static String toJsonString(BrandModelYear brandModelYear) {
+    Map<String, dynamic> json = {
+      "brand_model": brandModelYear.brandModel.id,
+      "year": brandModelYear.year,
+    };
+    return jsonEncode(json);
   }
 }
