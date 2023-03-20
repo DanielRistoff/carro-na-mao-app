@@ -2,6 +2,7 @@
 
 import 'package:carronamao/car_in_hand_app/models/person_information.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../car_in_hand_app_theme.dart';
 
 class PagePersonalInformationView extends StatefulWidget {
@@ -21,6 +22,8 @@ class _PagePersonalInformationViewState
     extends State<PagePersonalInformationView> {
   bool _switchNoticationValue = true;
   bool _switchCarControlValue = true;
+
+  final celularMask = MaskTextInputFormatter(mask: '(##) #####-####');
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +48,8 @@ class _PagePersonalInformationViewState
       widget.personInformation.phoneNumber = _phoneNumberController.text;
       widget.personInformation.login = _loginController.text;
       widget.personInformation.password = _passwordController.text;
+      widget.personInformation.notify = _switchNoticationValue;
+      widget.personInformation.controlMaintenance = _switchCarControlValue;
       widget.onSalve();
     }
 
@@ -155,8 +160,8 @@ class _PagePersonalInformationViewState
                                     height: 33,
                                     child: CupertinoTextField(
                                       controller: _phoneNumberController,
-                                      keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.newline,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [celularMask],
                                       minLines: 1,
                                       maxLines: 1,
                                     ),

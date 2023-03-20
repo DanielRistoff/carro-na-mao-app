@@ -95,6 +95,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_masked_text:
+    dependency: "direct main"
+    description:
+      name: flutter_masked_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.0"
+  flutter_masked_text2:
+    dependency: "direct main"
+    description:
+      name: flutter_masked_text2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.1"
   flutter_rating_bar:
     dependency: "direct main"
     description:
@@ -149,6 +163,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  mask_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: mask_text_input_formatter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:

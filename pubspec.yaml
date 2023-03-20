@@ -44,6 +44,9 @@ dependencies:
   dio: ^4.0.6
   mobx: ^2.1.0
   provider: ^6.0.5
+  flutter_masked_text2: ^0.9.1
+  flutter_masked_text: ^0.8.0
+  mask_text_input_formatter: ^2.4.0
 
 dev_dependencies:
   flutter_test:
