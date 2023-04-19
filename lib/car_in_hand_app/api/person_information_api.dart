@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:carronamao/car_in_hand_app/models/person_information.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
@@ -8,13 +7,25 @@ class PersonInformationApi {
   static void createPersonInformation(
     PersonInformation personInformation,
   ) async {
-    await http.post(
-      ApiUtil.mountUri('/v1/public/person-information/'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: PersonInformation.toJsonString(personInformation, false),
-    );
+    try {
+      Observable<PersonInformation> observablePersonInformation =
+          await getPersonInformationByLogin(personInformation);
+      PersonInformation personInformationCreate =
+          observablePersonInformation.value;
+
+      if (personInformationCreate.id != 0) {
+        http.Response response = await http.post(
+          ApiUtil.mountUri('/v1/public/person-information/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: PersonInformation.toJsonString(personInformation, false),
+        );
+        ApiUtil.responseJsonUtil(response, 'Problema para criar os dados');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   static void updatePersonInformation(
@@ -32,18 +43,16 @@ class PersonInformationApi {
   static Future<Observable<PersonInformation>> getPersonInformationByLogin(
     PersonInformation personInformation,
   ) async {
-    http.Response response = await http.get(ApiUtil.mountUri(
-        '/v1/public/person-information/login/${personInformation.login}'));
+    http.Response response = await http.get(
+      ApiUtil.mountUri(
+          '/v1/public/person-information/login/${personInformation.login}'),
+    );
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      final json = jsonDecode(response.body);
-      return Observable<PersonInformation>(PersonInformation.fromJson(json));
-    } else if (response.statusCode >= 400 && response.statusCode < 500) {
-      throw Exception('Página não encontrada');
-    } else if (response.statusCode > 500) {
-      throw Exception('Erro interno no servidor');
-    } else {
-      throw Exception('Erro desconhecido: ${response.statusCode}');
-    }
+    var dadosJson = ApiUtil.responseJsonUtil(
+        response, 'Problema para buscar informações do usuário');
+
+    return Observable<PersonInformation>(
+      PersonInformation.fromJson(dadosJson[0]),
+    );
   }
 }

@@ -43,10 +43,19 @@ class _PagePersonalInformationViewState
       _passwordController.text = widget.personInformation.password!;
     }
 
+    bool _isEmailValid(String email) {
+      final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+      return emailRegex.hasMatch(email);
+    }
+
     void onSalvePersonalInformation() {
       widget.personInformation.name = _nameController.text;
-      widget.personInformation.phoneNumber = _phoneNumberController.text;
+      widget.personInformation.phoneNumber =
+          _phoneNumberController.text.toString();
       widget.personInformation.login = _loginController.text;
+      if (_isEmailValid(_loginController.text)) {
+        widget.personInformation.email = _loginController.text;
+      }
       widget.personInformation.password = _passwordController.text;
       widget.personInformation.notify = _switchNoticationValue;
       widget.personInformation.controlMaintenance = _switchCarControlValue;
@@ -177,7 +186,7 @@ class _PagePersonalInformationViewState
                                   top: 16,
                                 ),
                                 child: Text(
-                                  "Login",
+                                  "Login/Email",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: CarInHandAppTheme.fontName,
